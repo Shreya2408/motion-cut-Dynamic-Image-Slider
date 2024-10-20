@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Slide Show Pro</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .slider {
+      position: relative;
+      max-width: 800px;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+      min-width: 100%;
+      position: relative;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    .caption {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      border-radius: 5px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .slide.active .caption {
+      opacity: 1;
+    }
+
+    .controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    .prev, .next {
+      cursor: pointer;
+      font-size: 24px;
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      border-radius: 50%;
+      user-select: none;
+    }
+
+    .prev:hover, .next:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="slider">
+    <div class="slides">
+      <div class="slide active">
+        <img src="eco1.jpeg" alt="Image 1">
+        <div class="caption">Caption for Image 1</div>
+      </div>
+      <div class="slide">
+        <img src="eco2.jpeg" alt="Image 2">
+        <div class="caption">Caption for Image 2</div>
+      </div>
+      <div class="slide">
+        <img src="eco3.jpeg" alt="Image 3">
+        <div class="caption">Caption for Image 3</div>
+      </div>
+      <!-- Add more slides as needed -->
+    </div>
+
+    <div class="controls">
+      <span class="prev">❮</span>
+      <span class="next">❯</span>
+    </div>
+  </div>
+
+  <script>
+    const slides = document.querySelector('.slides');
+    const slideImages = document.querySelectorAll('.slide');
+    let currentIndex = 0;
+    const intervalTime = 3000; // Speed in milliseconds
+    const slideWidth = slideImages[0].clientWidth;
+
+    const showSlide = (index) => {
+      slides.style.transform = `translateX(-${slideWidth * index}px)`;
+    };
+
+    const nextSlide = () => {
+      currentIndex = (currentIndex + 1) % slideImages.length;
+      showSlide(currentIndex);
+    };
+
+    const prevSlide = () => {
+      currentIndex = (currentIndex - 1 + slideImages.length) % slideImages.length;
+      showSlide(currentIndex);
+    };
+
+    document.querySelector('.next').addEventListener('click', nextSlide);
+    document.querySelector('.prev').addEventListener('click', prevSlide);
+
+    setInterval(nextSlide, intervalTime); // Auto-scroll
+  </script>
+
+</body>
+</html>
